@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegressionFromScratch", "RegressionFromScratch\RegressionFromScratch.csproj", "{81D254E3-E9D4-4010-B37C-24F5FCDB0B99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{9B26B985-B4EB-4120-9875-BD78C8FC2A28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81D254E3-E9D4-4010-B37C-24F5FCDB0B99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81D254E3-E9D4-4010-B37C-24F5FCDB0B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81D254E3-E9D4-4010-B37C-24F5FCDB0B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81D254E3-E9D4-4010-B37C-24F5FCDB0B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B26B985-B4EB-4120-9875-BD78C8FC2A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B26B985-B4EB-4120-9875-BD78C8FC2A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B26B985-B4EB-4120-9875-BD78C8FC2A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B26B985-B4EB-4120-9875-BD78C8FC2A28}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FCC22A4D-619E-4B13-A23F-C26ABB503EDD}
+	EndGlobalSection
+EndGlobal
