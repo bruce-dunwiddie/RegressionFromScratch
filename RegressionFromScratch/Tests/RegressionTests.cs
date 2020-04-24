@@ -34,6 +34,39 @@ namespace Tests
 
 			// validating results against values from https://towardsdatascience.com/simple-and-multiple-linear-regression-in-python-c928425168f9
 
+			decimal[,] A = new decimal[,]
+			{
+				{12, -51, 4},
+				{6, 167, -68},
+				{-4, 24, -41}
+			};
+
+			decimal[,] a1 = Matrices.SliceVertical(
+				A,
+				0,
+				0,
+				A.GetLength(0));
+
+			Assert.AreEqual(
+				new decimal[,]
+				{
+					{12},
+					{6},
+					{-4}
+				},
+				a1);
+
+			decimal sumA1 = 0;
+
+			for (int rowIndex = 0; rowIndex < a1.GetLength(0); rowIndex++)
+			{
+				sumA1 += a1[rowIndex, 0];
+			}
+
+			Assert.AreEqual(14, sumA1);
+
+			a1[0, /* will always be 0 */ 0] -= sumA1;
+
 
 		}
 
