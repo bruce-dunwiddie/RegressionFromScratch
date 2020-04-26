@@ -41,11 +41,18 @@ namespace Tests
 				{-4, 24, -41}
 			};
 
-			decimal[,] a1 = Matrices.SliceVertical(
+			int height = A.GetLength(0);
+			int width = A.GetLength(1);
+
+			decimal[,] a1 = Matrices.GetColumnVector(
 				A,
-				0,
-				0,
-				A.GetLength(0));
+				0);
+
+			//decimal[,] a1 = Matrices.SliceVertical(
+			//	A,
+			//	0,
+			//	0,
+			//	height);
 
 			Assert.AreEqual(
 				new decimal[,]
@@ -56,18 +63,57 @@ namespace Tests
 				},
 				a1);
 
-			decimal sumA1 = 0;
+			decimal[,] a1T = Matrices.GetTranspose(
+				a1);
 
-			for (int rowIndex = 0; rowIndex < a1.GetLength(0); rowIndex++)
-			{
-				sumA1 += a1[rowIndex, 0];
-			}
+			//decimal sumA1 = 0;
 
-			Assert.AreEqual(14, sumA1);
+			//for (int rowIndex = 0; rowIndex < a1.GetLength(0); rowIndex++)
+			//{
+			//	sumA1 += a1[rowIndex, 0];
+			//}
 
-			a1[0, /* will always be 0 */ 0] -= sumA1;
+			//Assert.AreEqual(14, sumA1);
 
+			//a1[0, /* will always be 0 */ 0] -= sumA1;
 
+			decimal[,] Q1 = Matrices.GetHouseholderMatrix(
+				A);
+
+			decimal[,] expected = new decimal[,]
+				{
+					{6/7m, 3/7m, -2/7m},
+					{3/7m, -2/7m, 6/7m},
+					{-2/7m, 6/7m, 3/7m}
+				};
+
+			//Assert.AreEqual(
+			//	new decimal[,]
+			//	{
+			//		{6/7m, 3/7m, -2/7m},
+			//		{3/7m, -2/7m, 6/7m},
+			//		{-2/7m, 6/7m, 3/7m}
+			//	},
+			//	Q1);
+
+			A = new decimal[,]
+				{
+					{4, 1, -2, 2},
+					{1, 2, 0, 1},
+					{-2, 0, 3, -2},
+					{2, 1, -2, -1}
+				};
+
+			Q1 = Matrices.GetHouseholderMatrix(
+				A);
+
+			expected = new decimal[,]
+				{
+					{1, 0, 0, 0},
+					{0, -1/3m, 2/3m, -2/3m},
+					{0, 2/3m, 2/3m, 1/3m},
+					{0, -2/3m, 1/3m, 2/3m}
+				};
 		}
 
 		[Test]
