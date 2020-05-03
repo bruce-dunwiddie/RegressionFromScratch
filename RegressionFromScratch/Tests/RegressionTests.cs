@@ -34,19 +34,18 @@ namespace Tests
 
 			// validating results against values from https://towardsdatascience.com/simple-and-multiple-linear-regression-in-python-c928425168f9
 
-			decimal[,] A = new decimal[,]
-			{
-				{12, -51, 4},
-				{6, 167, -68},
-				{-4, 24, -41}
-			};
+			Matrix A = new Matrix(
+				new decimal[,]
+				{
+					{12, -51, 4},
+					{6, 167, -68},
+					{-4, 24, -41}
+				});
 
-			int height = A.GetLength(0);
-			int width = A.GetLength(1);
-
-			decimal[,] a1 = Matrices.GetColumnVector(
-				A,
-				0);
+			Matrix a1 = A.GetColumnVector(
+				0,
+				0,
+				A.Height).AsMatrix();
 
 			//decimal[,] a1 = Matrices.SliceVertical(
 			//	A,
@@ -61,10 +60,9 @@ namespace Tests
 					{6},
 					{-4}
 				},
-				a1);
+				a1.Array);
 
-			decimal[,] a1T = Matrices.GetTranspose(
-				a1);
+			Matrix a1T = a1.GetTranspose();
 
 			//decimal sumA1 = 0;
 
@@ -77,8 +75,7 @@ namespace Tests
 
 			//a1[0, /* will always be 0 */ 0] -= sumA1;
 
-			decimal[,] Q1 = Matrices.GetHouseholderMatrix(
-				A);
+			Matrix Q1 = A.GetHouseholderMatrix();
 
 			decimal[,] expected = new decimal[,]
 				{
@@ -94,18 +91,18 @@ namespace Tests
 			//		{3/7m, -2/7m, 6/7m},
 			//		{-2/7m, 6/7m, 3/7m}
 			//	},
-			//	Q1);
+			//	Q1.Array);
 
-			A = new decimal[,]
+			A = new Matrix(
+				new decimal[,]
 				{
 					{4, 1, -2, 2},
 					{1, 2, 0, 1},
 					{-2, 0, 3, -2},
 					{2, 1, -2, -1}
-				};
+				});
 
-			Q1 = Matrices.GetHouseholderMatrix(
-				A);
+			Q1 = A.GetHouseholderMatrix();
 
 			expected = new decimal[,]
 				{

@@ -13,19 +13,21 @@ namespace Tests
 		[Test]
 		public void Matrices_Multiply_1x3times3x1()
 		{
-			decimal[,] left = new decimal[,]
-			{
-				{1, 2, 3}
-			};
+			Matrix left = new Matrix(
+				new decimal[,]
+				{
+					{1, 2, 3}
+				});
 
-			decimal[,] right = new decimal[,]
-			{
-				{4},
-				{5},
-				{6}
-			};
+			Matrix right = new Matrix(
+				new decimal[,]
+				{
+					{4},
+					{5},
+					{6}
+				});
 
-			decimal[,] result = Matrices.Multiply(
+			Matrix result = Matrices.Multiply(
 				left,
 				right);
 
@@ -34,25 +36,27 @@ namespace Tests
 				{
 					{32}
 				},
-				result);
+				result.Array);
 		}
 
 		[Test]
 		public void Matrices_Multiply_3x1times1x3()
 		{
-			decimal[,] left = new decimal[,]
-			{
-				{4},
-				{5},
-				{6}
-			};
+			Matrix left = new Matrix(
+				new decimal[,]
+				{
+					{4},
+					{5},
+					{6}
+				});
 
-			decimal[,] right = new decimal[,]
-			{
-				{1, 2, 3}
-			};
+			Matrix right = new Matrix(
+				new decimal[,]
+				{
+					{1, 2, 3}
+				});
 
-			decimal[,] result = Matrices.Multiply(
+			Matrix result = Matrices.Multiply(
 				left,
 				right);
 
@@ -63,25 +67,27 @@ namespace Tests
 					{5, 10, 15},
 					{6, 12, 18}
 				},
-				result);
+				result.Array);
 		}
 
 		[Test]
 		public void Matrices_Multiply_2x2()
 		{
-			decimal[,] left = new decimal[,]
-			{
-				{1, 2},
-				{3, 4}
-			};
+			Matrix left = new Matrix(
+				new decimal[,]
+				{
+					{1, 2},
+					{3, 4}
+				});
 
-			decimal[,] right = new decimal[,]
-			{
-				{2, 0},
-				{1, 2}
-			};
+			Matrix right = new Matrix(
+				new decimal[,]
+				{
+					{2, 0},
+					{1, 2}
+				});
 
-			decimal[,] result = Matrices.Multiply(
+			Matrix result = Matrices.Multiply(
 				left,
 				right);
 
@@ -91,25 +97,27 @@ namespace Tests
 					{4, 4},
 					{10, 8}
 				},
-				result);
+				result.Array);
 		}
 
 		[Test]
 		public void Matrices_Multiply_2x2Flipped()
 		{
-			decimal[,] left = new decimal[,]
-			{
-				{2, 0},
-				{1, 2}
-			};
+			Matrix left = new Matrix(
+				new decimal[,]
+				{
+					{2, 0},
+					{1, 2}
+				});
 
-			decimal[,] right = new decimal[,]
-			{
-				{1, 2},
-				{3, 4}
-			};
+			Matrix right = new Matrix(
+				new decimal[,]
+				{
+					{1, 2},
+					{3, 4}
+				});
 
-			decimal[,] result = Matrices.Multiply(
+			Matrix result = Matrices.Multiply(
 				left,
 				right);
 
@@ -119,25 +127,27 @@ namespace Tests
 					{2, 4},
 					{7, 10}
 				},
-				result);
+				result.Array);
 		}
 
 		[Test]
 		public void Matrices_Multiply_AnotherExample()
 		{
-			decimal[,] left = new decimal[,]
-			{
-				{-1},
-				{3},
-				{-2}
-			};
+			Matrix left = new Matrix(
+				new decimal[,]
+				{
+					{-1},
+					{3},
+					{-2}
+				});
 
-			decimal[,] right = new decimal[,]
-			{
-				{-1, 3, -2}
-			};
+			Matrix right = new Matrix(
+				new decimal[,]
+				{
+					{-1, 3, -2}
+				});
 
-			decimal[,] result = Matrices.Multiply(
+			Matrix result = Matrices.Multiply(
 				left,
 				right);
 
@@ -148,7 +158,7 @@ namespace Tests
 					{-3, 9, -6},
 					{2, -6, 4}
 				},
-				result);
+				result.Array);
 		}
 	}
 }
