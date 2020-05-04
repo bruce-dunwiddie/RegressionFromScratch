@@ -37,12 +37,12 @@ namespace Scratch.Regression
 
 				if (adjustedRow >= deletedRow)
 				{
-					adjustedRow--;
+					adjustedRow++;
 				}
 
 				if (adjustedColumn >= deletedColumn)
 				{
-					adjustedColumn--;
+					adjustedColumn++;
 				}
 
 				return base[adjustedRow, adjustedColumn];

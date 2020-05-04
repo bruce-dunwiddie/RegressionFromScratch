@@ -158,11 +158,6 @@ namespace Scratch.Regression
 		{
 			// https://www.mathsisfun.com/algebra/matrix-determinant.html
 
-			// you can only get a determinant from a square matrix
-
-			// using expansion by cofactors
-			// https://www.mathwords.com/e/expansion_by_cofactors.htm
-
 			return GetDeterminant(
 				this);
 		}
@@ -170,6 +165,11 @@ namespace Scratch.Regression
 		private static decimal GetDeterminant(
 			Matrix matrix)
 		{
+			// you can only get a determinant from a square matrix
+
+			// using expansion by cofactors
+			// https://www.mathwords.com/e/expansion_by_cofactors.htm
+
 			// look for 2x2 matrix
 			if (matrix.Height == 2)
 			{
@@ -191,9 +191,8 @@ namespace Scratch.Regression
 						columnIndex);
 
 					determinant +=
-						matrix[columnIndex, 0] *
-						GetDeterminant(
-							cofactor);
+						matrix[0, columnIndex] *
+						cofactor.GetDeterminant();
 				}
 
 				return determinant;
