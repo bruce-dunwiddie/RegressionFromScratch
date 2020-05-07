@@ -79,10 +79,10 @@ namespace Scratch.Regression
 		}
 
 		public Matrix GetMinor(
-			int startingColumnIndex,
-			int width,
 			int startingRowIndex,
-			int height)
+			int height,
+			int startingColumnIndex,
+			int width)
 		{
 			decimal[,] minor = new decimal[height, width];
 
@@ -235,7 +235,7 @@ namespace Scratch.Regression
 			return a11 * a22 - a12 * a21;
 		}
 
-		public Matrix GetHouseholderMatrix()
+		public Matrix GetHouseholder()
 		{
 			// https://en.wikipedia.org/wiki/QR_decomposition#Using_Householder_reflections
 
@@ -256,7 +256,8 @@ namespace Scratch.Regression
 			// subtract norm * e vector
 			// the sign is selected so it has the opposite sign of u1
 			decimal u1 = u[0, 0];
-			u[0, 0] -= Math.Sign(u1) * norm;
+			//u[0, 0] -= Math.Sign(u1) * norm;
+			u[0, 0] -= norm;
 
 			u.DivideBy(2);
 
