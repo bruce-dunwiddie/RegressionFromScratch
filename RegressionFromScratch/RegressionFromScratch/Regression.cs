@@ -48,6 +48,8 @@ namespace Scratch.Regression
 
 			// loop over how many columns
 
+
+
 			return (b: new decimal[] { }, b0: 0);
 		}
 

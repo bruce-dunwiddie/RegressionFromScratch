@@ -43,6 +43,18 @@ namespace Scratch.Regression
 				height);
 		}
 
+		public decimal GetNorm()
+		{
+			decimal sum = 0;
+
+			for (int rowIndex = 0; rowIndex < Height; rowIndex++)
+			{
+				sum += Formulas.Square(this[rowIndex]);
+			}
+
+			return Formulas.Sqrt(sum);
+		}
+
 		public Matrix AsMatrix()
 		{
 			decimal[,] vector = new decimal[Height, 1];

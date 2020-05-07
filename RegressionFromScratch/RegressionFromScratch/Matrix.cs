@@ -42,6 +42,30 @@ namespace Scratch.Regression
 			}
 		}
 
+		public void MultiplyBy(
+			decimal value)
+		{
+			for (int rowIndex = 0; rowIndex < Height; rowIndex++)
+			{
+				for (int columnIndex = 0; columnIndex < Width; columnIndex++)
+				{
+					this[rowIndex, columnIndex] *= value;
+				}
+			}
+		}
+
+		public void DivideBy(
+			decimal value)
+		{
+			for (int rowIndex = 0; rowIndex < Height; rowIndex++)
+			{
+				for (int columnIndex = 0; columnIndex < Width; columnIndex++)
+				{
+					this[rowIndex, columnIndex] /= value;
+				}
+			}
+		}
+
 		public ColumnVector GetColumnVector(
 			int columnIndex,
 			int startingRowIndex,
@@ -213,54 +237,46 @@ namespace Scratch.Regression
 
 		public Matrix GetHouseholderMatrix()
 		{
+			// https://en.wikipedia.org/wiki/QR_decomposition#Using_Householder_reflections
+
 			// creating a new alias to match commonly used algorithm variables
 			Matrix A = this;
 
-			int m = A.Height;
-			int n = A.Width;
+			// don't alter a1 or it will alter A
+			ColumnVector a1 = A.GetColumnVector(
+				0,
+				0,
+				A.Height);
 
-			Matrix a1 = A.GetColumnVector(
-				columnIndex: 0,
-				startingRowIndex: 0,
-				height: A.Height).AsMatrix();
+			decimal norm = a1.GetNorm();
 
-			decimal sumA1 = a1.GetSum()[0, 0];
+			// create copy of vector that can be edited
+			Matrix u = a1.AsMatrix();
 
-			a1[0, 0] -= sumA1;
+			// subtract norm * e vector
+			// the sign is selected so it has the opposite sign of u1
+			decimal u1 = u[0, 0];
+			u[0, 0] -= Math.Sign(u1) * norm;
 
-			a1 = Matrices.Divide(
-				a1,
-				2);
+			u.DivideBy(2);
 
-			Matrix a1T = a1.GetTranspose();
+			Matrix uT = u.GetTranspose();
+
+			Matrix uuT = Matrices.Multiply(
+				u,
+				uT);
 
 			Matrix I = Matrices.GetIdentity(
-				n);
+				uuT.Width);
 
-			//decimal[,] householder = Matrices.Subtract(
-			//	I,
-			//	Matrices.Multiply(
-			//		2,
-			//		Matrices.Divide(
-			//			Matrices.Multiply(
-			//				a1,
-			//				a1T),
-			//			Matrices.Multiply(
-			//				a1T,
-			//				a1))));
+			uuT.MultiplyBy(
+				2 / norm);
 
-			// this gets the "right" answer compared to one online example for a Householder transform
-			// but I'm not sure it's "correct"
-
-			Matrix householder = Matrices.Subtract(
+			Matrix H = Matrices.Subtract(
 				I,
-				Matrices.Multiply(
-					2 / sumA1,
-					Matrices.Multiply(
-						a1,
-						a1T)));
+				uuT);
 
-			return householder;
+			return H;
 		}
 	}
 }

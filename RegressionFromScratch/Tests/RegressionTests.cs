@@ -28,7 +28,7 @@ namespace Tests
 		}
 
 		[Test]
-		public void Regression_Solve_OLS()
+		public void Regression_Solve_OLS_Partials()
 		{
 			// Boston dataset downloaded from http://lib.stat.cmu.edu/datasets/boston
 
@@ -42,16 +42,16 @@ namespace Tests
 					{-4, 24, -41}
 				});
 
-			Matrix a1 = A.GetColumnVector(
+			// don't alter a1 or it will alter A
+			ColumnVector a1 = A.GetColumnVector(
 				0,
 				0,
-				A.Height).AsMatrix();
+				A.Height);
 
-			//decimal[,] a1 = Matrices.SliceVertical(
-			//	A,
-			//	0,
-			//	0,
-			//	height);
+			decimal norm = a1.GetNorm();
+
+			// create copy of vector that can be edited
+			Matrix u = a1.AsMatrix();
 
 			Assert.AreEqual(
 				new decimal[,]
@@ -60,22 +60,34 @@ namespace Tests
 					{6},
 					{-4}
 				},
-				a1.Array);
+				a1.AsMatrix().Array);
 
-			Matrix a1T = a1.GetTranspose();
+			// subtract norm * e vector
+			// the sign is selected so it has the opposite sign of u1
+			decimal u1 = u[0, 0];
+			u[0, 0] -= Math.Sign(u1) * norm;
 
-			//decimal sumA1 = 0;
+			u.DivideBy(2);
 
-			//for (int rowIndex = 0; rowIndex < a1.GetLength(0); rowIndex++)
-			//{
-			//	sumA1 += a1[rowIndex, 0];
-			//}
+			Matrix uT = u.GetTranspose();
 
-			//Assert.AreEqual(14, sumA1);
+			Matrix uuT = Matrices.Multiply(
+				u,
+				uT);
 
-			//a1[0, /* will always be 0 */ 0] -= sumA1;
+			Matrix I = Matrices.GetIdentity(
+				uuT.Width);
 
-			Matrix Q1 = A.GetHouseholderMatrix();
+			uuT.MultiplyBy(
+				2 / norm);
+
+			Matrix H = Matrices.Subtract(
+				I,
+				uuT);
+
+			Matrix HA = Matrices.Multiply(
+				H,
+				A);
 
 			decimal[,] expected = new decimal[,]
 				{
@@ -84,14 +96,9 @@ namespace Tests
 					{-2/7m, 6/7m, 3/7m}
 				};
 
-			//Assert.AreEqual(
-			//	new decimal[,]
-			//	{
-			//		{6/7m, 3/7m, -2/7m},
-			//		{3/7m, -2/7m, 6/7m},
-			//		{-2/7m, 6/7m, 3/7m}
-			//	},
-			//	Q1.Array);
+			Assert.AreEqual(
+				expected,
+				H.Array);
 
 			A = new Matrix(
 				new decimal[,]
@@ -102,15 +109,31 @@ namespace Tests
 					{2, 1, -2, -1}
 				});
 
-			Q1 = A.GetHouseholderMatrix();
+			//Q1 = A.GetHouseholderMatrix();
 
-			expected = new decimal[,]
+			//expected = new decimal[,]
+			//	{
+			//		{1, 0, 0, 0},
+			//		{0, -1/3m, 2/3m, -2/3m},
+			//		{0, 2/3m, 2/3m, 1/3m},
+			//		{0, -2/3m, 1/3m, 2/3m}
+			//	};
+		}
+
+		[Test]
+		public void Regression_Solve_OLS()
+		{
+			Matrix A = new Matrix(
+				new decimal[,]
 				{
-					{1, 0, 0, 0},
-					{0, -1/3m, 2/3m, -2/3m},
-					{0, 2/3m, 2/3m, 1/3m},
-					{0, -2/3m, 1/3m, 2/3m}
-				};
+					{2, -2, 18},
+					{2, 1, 0},
+					{1, 2, 0}
+				});
+
+			Matrix H = A.GetHouseholderMatrix();
+
+
 		}
 
 		[Test]
